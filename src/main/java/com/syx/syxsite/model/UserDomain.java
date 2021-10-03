@@ -1,29 +1,36 @@
 package com.syx.syxsite.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author:syx
- * @date:2021/10/2 19:40
- * @version:v1.0
+ * 用户信息
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class User {
-    //用户id
+@NoArgsConstructor
+public class UserDomain {
+
+    /** 主键编号 */
     private Integer uid;
-    //用户名
+    /** 用户名 */
     private String username;
+    /** 密码 */
     private String password;
+    /** email */
     private String email;
+    /** 主页地址 */
     private String homeUrl;
+    /**  用户显示的名称 */
     private String screenName;
+    /** 用户注册时的GMT unix时间戳 */
     private Integer created;
+    /** 最后活动时间 */
     private Integer activated;
+    /** 上次登录最后活跃时间 */
     private Integer logged;
+    /** 用户组 */
     private String groupName;
+
 }

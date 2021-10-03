@@ -32,7 +32,7 @@
 
 */
 
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic");
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
 html {
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
@@ -46,7 +46,7 @@ input, textarea {
 	-webkit-appearance: none;
 	-webkit-border-radius: 0;
 }
-button, html input[type="button"],/* 1 */ input[type="reset"] {
+button, html input[type="button"],/* 1 */ input[type="reset"], input[type="submit"] {
 	-webkit-appearance: button;
 	cursor: pointer;
  *overflow:visible;
@@ -520,7 +520,7 @@ color:#404040;
 }
 /*== Work Details ==*/
 
-.work-details {
+.work-details, .blog-details {
 	padding: 0 69px;
 	margin-top: 73px
 }
@@ -581,7 +581,6 @@ color:#404040;
 	font-size: 36px;
 	font-weight: normal
 }
-
 .blog-details .enter-content {
 	margin-top: 62px
 }
@@ -624,7 +623,7 @@ color:#404040;
 	line-height: 30px;
 	font-weight: 300;
 	color: #343434;
-	width: 88%;
+	width: 92%;
 }
 .comments-reply li section .date-pan {
 	font-size: 14px;
@@ -700,134 +699,4 @@ color:#404040;
 }
 .commentys-form input[type="button"]:hover {
 	background-color: #ff5c5c
-}
-
-
-.icon {
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-color: #fff !important;
-	background-size: 40px;
-	width: 60px;
-	height: 60px;
-	float: left;
-	position: relative;
-	margin: 0;
-	opacity: 0.85
-}
-
-.icon.weibo {
-	background-image: url(/site/images/social/icon-weibo.png)
-}
-
-
-
-.icon.instagram {
-	background-image: url(/site/images/social/icon-instagram.png)
-}
-
-
-
-.icon.behance {
-	background-image: url(/site/images/social/icon-behance.png)
-}
-
-
-
-.icon.twitter {
-	background-image: url(/site/images/social/icon-twitter.png)
-}
-
-
-
-.icon.github {
-	background-image: url(/site/images/social/icon-github.png)
-}
-
-
-
-.icon.px {
-	background-image: url(/site/images/social/icon-px.png)
-}
-
-
-
-.icon.uicn {
-	background-image: url(/site/images/social/icon-uicn.png)
-}
-
-
-
-.icon.dribbble {
-	background-image: url(/site/images/social/icon-dribbble.png)
-}
-
-
-
-.icon.csdn{
-	background-image: url(/site/images/social/icon-csdn.png)
-}
-
-
-.icon.email{
-	background-image: url(/site/images/social/icon-email.png)
-}
-
-
-.icon.jianshu{
-	background-image: url(/site/images/social/icon-jianshu.png)
-}
-
-
-.icon.resume{
-	background-image: url(/site/images/social/icon-resume.png)
-}
-
-.icon.zhihu{
-	background-image: url(/site/images/social/icon-zhihu.png)
-}
-
-
-p>img {
-	display: block;
-	max-width: 100%;
-	height: auto;
-}
-
-pre {
-	border: 0px!important;
-}
-
-input[type="submit"] {
-	padding: 0 36px;
-	text-transform: uppercase;
-	display: inline-block;
-	font-size: 21px;
-	line-height: 60px;
-	color: #FFF;
-	font-weight: bold;
-	text-align: center;
-	border: none;
-	outline: none;
-	background-color: #fb5353;
-	margin-top: 50px;
-}
-
-.comments-reply li section h4 a {
-	font-weight: 800;
-	color: #404040;
-	font-size: 21px;
-	margin-bottom: 6px;
-	margin-top: 0;
-}
-
-#post-content ol,#post-content ul {
-	padding-left: 30px;
-	margin-top: 0;
-	margin-bottom: 10px;
-}
-
-.blog-details {
-	max-width: 750px;
-	margin: 0 auto;
 }

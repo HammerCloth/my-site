@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 
 /**
+ * 配置404，500页面
  * @author:syx
  * @date:2021/10/2 20:18
  * @version:v1.0

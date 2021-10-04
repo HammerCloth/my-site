@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AttAchDomain {
+public class AttAch {
 
     //主键编号
     private Integer id;

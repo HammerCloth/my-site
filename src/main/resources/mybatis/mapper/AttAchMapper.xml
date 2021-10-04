@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.syx.syxsite.dao.AttAchDao">
+
+    <sql id="BASE_TABLE">
+        t_attach
+    </sql>
+
+    <!--    /**-->
+    <!--    * 获取附件的总数-->
+    <!--    * @return 附件总数-->
+    <!--    */-->
+    <!--    Integer getAttachesCount();-->
+    <select id="getAttachesCount" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM
+        <include refid="BASE_TABLE"/>
+    </select>
+
+    <!--    /**-->
+    <!--    * 添加单个附件信息-->
+    <!--    * @param attAch-->
+    <!--    * @return-->
+    <!--    */-->
+    <!--    int addAttAch(AttAch attAch);-->
+
+    <!--    /**-->
+    <!--    * 批量添加附件信息-->
+    <!--    * @param list-->
+    <!--    * @return-->
+    <!--    */-->
+    <!--    int batchAddAttAch(List<AttAch> list);-->
+
+    <!--    /**-->
+    <!--    * 根据主键编号删除附件信息-->
+    <!--    * @param id-->
+    <!--    * @return-->
+    <!--    */-->
+    <!--    int deleteAttAch(int id);-->
+
+    <!--    /**-->
+    <!--    * 更新附件信息-->
+    <!--    * @param attAch-->
+    <!--    * @return-->
+    <!--    */-->
+    <!--    int updateAttAch(AttAch attAch);-->
+
+    <!--    /**-->
+    <!--    * 根据主键获取附件信息-->
+    <!--    * @param id-->
+    <!--    * @return-->
+    <!--    */-->
+    <!--    AttAch getAttAchById(@Param("id") int id);-->
+
+    <!--    /**-->
+    <!--    * 获取所有的附件信息-->
+    <!--    * @return-->
+    <!--    */-->
+    <!--    List<AttAch> getAtts();-->
+</mapper>

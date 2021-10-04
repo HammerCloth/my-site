@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContentDomain {
+public class Content {
 
     //文章id
     private Integer cid;

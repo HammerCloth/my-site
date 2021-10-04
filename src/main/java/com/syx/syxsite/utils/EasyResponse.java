@@ -1,10 +1,7 @@
 package com.syx.syxsite.utils;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -17,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @version:v1.0
  */
 @ApiModel(description = "将返回的参数封装成类")
-@Component //使用spring托管
+@Component
 @Data
 @NoArgsConstructor
 @Accessors(chain = true) //允许链式编程

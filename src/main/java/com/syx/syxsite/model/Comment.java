@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentDomain {
+public class Comment {
 
     //comment表主键
     private Integer coid;

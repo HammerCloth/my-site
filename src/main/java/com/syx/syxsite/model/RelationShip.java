@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RelationShipDomain {
+public class RelationShip {
 
     /**
      * 文章主键编号

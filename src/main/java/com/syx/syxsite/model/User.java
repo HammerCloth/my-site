@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDomain {
+public class User {
 
     /** 主键编号 */
     private Integer uid;

@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+
+spring:
+  thymeleaf:
+    cache: false #关闭thymeleaf缓存
+  datasource: #数据库设置
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.113.218.78:3306/lu_tale?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: syxsyx
+mybatis:
+  type-aliases-package: com.syx.syxsite.model #对该包下的类自动启用别名
+  config-location: classpath:mybatis/mybatis-config.xml #注册配置文件
+  mapper-locations: classpath:mybatis/mapper/*.xml #对该包下的xml文件自动注册

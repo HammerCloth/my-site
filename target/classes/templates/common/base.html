@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<!-- nav -->
+<nav role="header-nav" class="navy" th:fragment="nav(flag)">
+    <ul>
+        <li th:class="${flag}=='index'?'nav-active':''"><a th:href="@{/}" title="Work">Work</a></li>
+        <li th:class="${flag}=='about'?'nav-active':''"><a th:href="@{/about}" title="About">About</a></li>
+        <li th:class="${flag}=='blog'?'nav-active':''"><a th:href="@{/blog}" title="Blog">Blog</a></li>
+        <li th:class="${flag}=='contact'?'nav-active':''"><a th:href="@{/contact}" title="Contact">Contact</a></li>
+    </ul>
+</nav>
+<!-- nav -->
+
+
+<!-- logo -->
+<h1>
+    <a th:href="@{/}" title="avana LLC" th:fragment="logo">
+        <img th:src="@{/site/images/logo.png}" title="avana LLC" alt="avana LLC"/>
+    </a>
+</h1>
+<!-- logo -->
+
+
+<!-- footer -->
+<footer role="footer" th:fragment="footer">
+    <!-- logo -->
+    <h1>
+        <a href="index.html" title="avana LLC">
+            <img th:src="@{/site/images/logo.png}" title="avana LLC" alt="avana LLC"/>
+        </a>
+    </h1>
+    <!-- logo -->
+    <!-- nav -->
+    <nav role="footer-nav">
+        <ul>
+            <li><a th:href="@{/}" title="Work">Work</a></li>
+            <li><a th:href="@{/about}" title="About">About</a></li>
+            <li><a th:href="@{/blog}" title="Blog">Blog</a></li>
+            <li><a th:href="@{/contact}" title="Contact">Contact</a></li>
+        </ul>
+    </nav>
+    <!-- nav -->
+    <ul role="social-icons">
+        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-flickr" aria-hidden="true"></i></a></li>
+    </ul>
+    <p class="copy-right">&copy; 2021 avana LLC.. All rights Resved</p>
+</footer>
+<!-- footer -->
+</body>
+</html>

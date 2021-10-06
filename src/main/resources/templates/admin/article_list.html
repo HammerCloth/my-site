@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='文章管理',active='article'">
-<header th:replace="admin/header::headerFragment(${title},${active})"></header>
+<header th:replace="common/header/admin_header::admin-header(${title},${active})"></header>
 <body class="fixed-left">
 <div id="wrapper">
-    <div th:replace="admin/header::header-body"></div>
+    <div th:replace="common/base::admin-topbar"></div>
+    <div th:replace="common/base::admin-side-menu"></div>
     <div class="content-page">
         <div class="content">
             <div class="container">
@@ -65,15 +66,17 @@
 
                             </tbody>
                         </table>
+                        <!--todo 分页-->
                         <div th:replace="comm/macros :: pageAdminNav(${articles})"></div>
                     </div>
                 </div>
-                <div th:replace="admin/footer :: footer-content"></div>
+                <div th:replace="common/base::admin-footer-content"></div>
             </div>
         </div>
     </div>
 </div>
-<div th:replace="admin/footer :: footer"></div>
+<div th:replace="common/base::admin-footer"></div>
+<!--页面逻辑-->
 <script type="text/javascript">
     /*<![CDATA[*/
     var tale = new $.tale();

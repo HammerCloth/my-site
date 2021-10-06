@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.syx.syxsite.dao.MetaDao">
+    <sql id="BASE_TABLE">
+        t_metas
+    </sql>
+
+    <!--    /**-->
+    <!--    * 按照类型获取项目数量-->
+    <!--    * @param type-->
+    <!--    * @return 项目数量-->
+    <!--    */-->
+    <!--    Integer getMetasCountByType(@Param("type") String type);-->
+    <select id="getMetasCountByType" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM
+        <include refid="BASE_TABLE"/>
+        WHERE type = #{type}
+    </select>
+</mapper>

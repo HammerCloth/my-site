@@ -34,7 +34,7 @@ public class Comment {
     private String agent;
     //评论类型
     private String type;
-    //评论状态
+    //评论状态 approved(审核通过) not_audit(未审核)
     private String status;
     //父级评论
     private Integer parent;

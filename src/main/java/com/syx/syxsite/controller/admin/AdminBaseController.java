@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author:syx
@@ -32,10 +33,11 @@ public class AdminBaseController {
 
     @ApiOperation(value = "校验用户名和密码", notes = "校验用户名和密码，并返回响应")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String")
+            @ApiImplicitParam(name = "username", value = "用户名"),
+            @ApiImplicitParam(name = "password", value = "密码")
     })
     @PostMapping("/admin/login")
+    @ResponseBody //这里不需要跳转页面，所以必须加上该注解用于传递消息,否则会不断返回login页面
     public EasyResponse login(String username, String password) {
         // todo 还需要和数据库连接
         if (username.equals("admin") && password.equals("123456")) {
@@ -47,7 +49,7 @@ public class AdminBaseController {
     @ApiOperation(value = "跳转到后台主页面", notes = "跳转到后台主页面")
     @GetMapping("/admin/index")
     public String index(Model model) {
-
+        //todo 需要传入相应的数据
         return "admin/index";
     }
 

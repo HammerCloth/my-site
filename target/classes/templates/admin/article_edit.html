@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='保存文章',active='publish'">
-<header th:replace="admin/header::headerFragment(${title},${active})"></header>
+<header th:replace="common/header/admin_header::admin-header(${title},${active})"></header>
 <link th:href="@{/admin/plugins/tagsinput/jquery.tagsinput.css}" rel="stylesheet"/>
 <link th:href="@{/admin/plugins/select2.dist.css/select2-bootstrap.css}" rel="stylesheet"/>
 <link th:href="@{/admin/plugins/toggles/toggles.css}" rel="stylesheet"/>
@@ -26,7 +26,8 @@
 </style>
 <body class="fixed-left">
 <div id="wrapper">
-    <div th:replace="admin/header::header-body"></div>
+    <div th:replace="common/base::admin-topbar"></div>
+    <div th:replace="common/base::admin-side-menu"></div>
     <div class="content-page">
         <div class="content">
             <div class="container">
@@ -156,12 +157,12 @@
                         </form>
                     </div>
                 </div>
-                <div th:replace="admin/footer :: footer-content"></div>
+                <div th:replace="common/base::admin-footer-content"></div>
             </div>
         </div>
     </div>
 </div>
-<div th:replace="admin/footer :: footer"></div>
+<div th:replace="common/base::admin-footer"></div>
 <script type="text/javascript">
     $(function() {
         editormd("my-editormd", {//注意1：这里的就是上面的DIV的id属性值

@@ -37,7 +37,7 @@
                                 <span class="mini-stat-icon"><i class="fa fa-cloud-upload"
                                                                 aria-hidden="true"></i></span>
                                 <div class="mini-stat-info text-right">
-                                    上传了<span class="counter" th:text="${statistics.attachs}"></span>个附件
+                                    上传了<span class="counter" th:text="${statistics.attaches}"></span>个附件
                                 </div>
                             </div>
                         </div>
@@ -52,76 +52,76 @@
                         </div>
                     </div>
                     <!--仪表盘-->
-                    <div class="row">
-                        <!--最新文章-->
-                        <div class="col-md-4">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">最新文章</h4>
-                                </div>
-                                <div class="panel-body">
-                                    <ul class="list-group">
-                                        <li class="list-group-item" th:each="article : ${articles}">
-                            <span class="badge badge-primary"
-                                  th:title="${article.commentsNum}+'条评论'" th:text="${article.commentsNum}"></span>
-                                            <a target="_blank"
-                                               th:href="@{'/blog/article/'+${article.cid}}"
-                                               th:text="${article.title}"></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!--最新文章-->
-                        <!--最新留言-->
-                        <div class="col-md-4">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">最新留言</h4>
-                                </div>
-                                <div class="panel-body">
-                                    <div th:if="${comments}== null and ${#lists.size(comments)}==0">
-                                        <div class="alert alert-warning">
-                                            还没有收到留言.
-                                        </div>
-                                    </div>
-                                    <ul class="list-group"
-                                        th:unless="${comments}==null and ${#lists.size(comments)}==0">
-                                        <li class="list-group-item" th:each="comment : ${comments}">
-                                            <div th:if="${comment.url}!=null and ${comment.url}!=''">
-                                                <a th:href="@{${comment.url}}" target="_blank"
-                                                   th:text="${comment.author}"></a>
-                                            </div>
-                                            <th:block th:unless="${comment.url}!=null and ${comment.url}!=''"
-                                                      th:text="${comment.author}"/>
-                                            于
-                                            <th:block th:text="${commons.fmtdate(comment.created,'MM月dd日HH:mm')}"/>
-                                            ：<a
-                                                th:href="${commons.site_url('/blog/article/')}+${comment.cid}+'#comments-content'"
-                                                target="_blank" th:utext="${commons.article(comment.content)}"></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!--最新留言-->
-                        <!--系统日志-->
-                        <div class="col-md-4">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">系统日志</h4>
-                                </div>
-                                <div class="panel-body">
-                                    <ul class="list-group">
-                                        <li class="list-group-item" th:each="log : ${logs}">
-                                            <span th:text="${commons.fmtdate(log.created, 'yyyy-MM-dd HH:mm:ss')} +' => '+ ${log.action}"></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!--系统日志-->
-                    </div>
+<!--                    <div class="row">-->
+<!--                        &lt;!&ndash;最新文章&ndash;&gt;-->
+<!--                        <div class="col-md-4">-->
+<!--                            <div class="panel panel-default">-->
+<!--                                <div class="panel-heading">-->
+<!--                                    <h4 class="panel-title">最新文章</h4>-->
+<!--                                </div>-->
+<!--                                <div class="panel-body">-->
+<!--                                    <ul class="list-group">-->
+<!--                                        <li class="list-group-item" th:each="article : ${articles}">-->
+<!--                            <span class="badge badge-primary"-->
+<!--                                  th:title="${article.commentsNum}+'条评论'" th:text="${article.commentsNum}"></span>-->
+<!--                                            <a target="_blank"-->
+<!--                                               th:href="@{'/blog/article/'+${article.cid}}"-->
+<!--                                               th:text="${article.title}"></a>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;最新文章&ndash;&gt;-->
+<!--                        &lt;!&ndash;最新留言&ndash;&gt;-->
+<!--                        <div class="col-md-4">-->
+<!--                            <div class="panel panel-default">-->
+<!--                                <div class="panel-heading">-->
+<!--                                    <h4 class="panel-title">最新留言</h4>-->
+<!--                                </div>-->
+<!--                                <div class="panel-body">-->
+<!--                                    <div th:if="${comments}== null and ${#lists.size(comments)}==0">-->
+<!--                                        <div class="alert alert-warning">-->
+<!--                                            还没有收到留言.-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <ul class="list-group"-->
+<!--                                        th:unless="${comments}==null and ${#lists.size(comments)}==0">-->
+<!--                                        <li class="list-group-item" th:each="comment : ${comments}">-->
+<!--                                            <div th:if="${comment.url}!=null and ${comment.url}!=''">-->
+<!--                                                <a th:href="@{${comment.url}}" target="_blank"-->
+<!--                                                   th:text="${comment.author}"></a>-->
+<!--                                            </div>-->
+<!--                                            <th:block th:unless="${comment.url}!=null and ${comment.url}!=''"-->
+<!--                                                      th:text="${comment.author}"/>-->
+<!--                                            于-->
+<!--                                            <th:block th:text="${commons.fmtdate(comment.created,'MM月dd日HH:mm')}"/>-->
+<!--                                            ：<a-->
+<!--                                                th:href="${commons.site_url('/blog/article/')}+${comment.cid}+'#comments-content'"-->
+<!--                                                target="_blank" th:utext="${commons.article(comment.content)}"></a>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;最新留言&ndash;&gt;-->
+<!--                        &lt;!&ndash;系统日志&ndash;&gt;-->
+<!--                        <div class="col-md-4">-->
+<!--                            <div class="panel panel-default">-->
+<!--                                <div class="panel-heading">-->
+<!--                                    <h4 class="panel-title">系统日志</h4>-->
+<!--                                </div>-->
+<!--                                <div class="panel-body">-->
+<!--                                    <ul class="list-group">-->
+<!--                                        <li class="list-group-item" th:each="log : ${logs}">-->
+<!--                                            <span th:text="${commons.fmtdate(log.created, 'yyyy-MM-dd HH:mm:ss')} +' => '+ ${log.action}"></span>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;系统日志&ndash;&gt;-->
+<!--                    </div>-->
                 </div>
                 <div th:replace="common/base::admin-footer-content"></div>
             </div>

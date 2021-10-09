@@ -1,5 +1,6 @@
 package com.syx.syxsite.dao;
 
+import com.syx.syxsite.dto.cond.ContentCond;
 import com.syx.syxsite.model.Content;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -66,7 +67,7 @@ public interface ContentDao {
      * @param contentCond
      * @return
      */
-    List<Content> getArticlesByCond(Content contentCond);
+    List<Content> getArticlesByCond(ContentCond contentCond);
 
     /**
      * 获取归档数据

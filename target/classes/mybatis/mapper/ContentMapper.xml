@@ -8,15 +8,55 @@
         t_contents
     </sql>
 
-    <!--    /**-->
-    <!--    * 获取文章总数-->
-    <!--    * @return 文章数-->
-    <!--    */-->
-    <!--    Integer getArticleCount();-->
+    <!-- 文章的基本列 -->
+    <sql id="BASE_COLUMN">
+        c.cid, c.title, c.titlePic, c.slug, c.created, c.modified, c.content, c.authorId,
+        c.type, c.status, c.tags, c.categories, c.hits, c.commentsNum, c.allowComment,
+        c.allowPing, c.allowFeed
+    </sql>
+
+    <!--Integer getArticleCount();-->
     <select id="getArticleCount" resultType="java.lang.Integer">
         SELECT count(*)
         FROM
         <include refid="BASE_TABLE"/>
     </select>
+
+    <!--List<Content> getArticlesByCond(ContentCond contentCond);-->
+    <select id="getArticlesByCond" resultType="com.syx.syxsite.model.Content">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        as c
+        <where>
+            <if test="tag !=null">
+                AND c.tags LIKE CONCAT('%',#{tag},'%') <!--模糊查询拼接-->
+            </if>
+            <if test="category!=null">
+                AND c.categories LIKE CONCAT('%',#{category},'%') <!--模糊查询拼接-->
+            </if>
+            <if test="status!=null">
+                AND c.status = #{status}
+            </if>
+            <if test="title != null">
+                AND c.title LIKE CONCAT('%',#{title},'%')
+            </if>
+            <if test="content != null">
+                AND c.content LIKE CONCAT('%',#{content},'%')
+            </if>
+            <if test="type != null">
+                AND c.type = #{type}
+            </if>
+            <if test="startTime != null">
+                AND c.created &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                AND c.created &lt;= #{endTime}
+            </if>
+        </where>
+        ORDER BY c.created DESC <!--按照时间顺序倒序-->
+    </select>
+
 
 </mapper>

@@ -7,14 +7,42 @@
     <sql id="BASE_TABLE">
         t_comments
     </sql>
-    <!--    /**-->
-    <!--    * 获取评论总数-->
-    <!--    * @return 获取评论总数-->
-    <!--    */-->
+
+    <!-- 基本列 -->
+    <sql id="BASE_COLUMN">
+        cm.coid, cm.cid, cm.created, cm.author, cm.authorId, cm.ownerId, cm.mail,
+        cm.url, cm.ip, cm.agent, cm.type, cm.status, cm.parent, cm.content
+    </sql>
+
     <!--    Integer getCommentsCount();-->
     <select id="getCommentsCount" resultType="java.lang.Integer">
         SELECT count(*)
         FROM
         <include refid="BASE_TABLE"/>
     </select>
+
+    <!--List<Comment> getCommentsByCond(CommentCond commentCond);-->
+    <select id="getCommentsByCond" resultType="com.syx.syxsite.model.Comment">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        as cm
+        <where>
+            <if test="status != null">
+                AND cm.status = #{status}
+            </if>
+            <if test="startTime != null">
+                AND cm.created &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                AND cm.created &lt;= #{endTime}
+            </if>
+            <if test="parent != null">
+                AND cm.parent = #{parent}
+            </if>
+        </where>
+        ORDER BY cm.created
+    </select>
+
 </mapper>

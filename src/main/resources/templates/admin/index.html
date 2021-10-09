@@ -97,7 +97,7 @@
                                             于
                                             <th:block th:text="${commons.fmtdate(comment.created,'MM月dd日HH:mm')}"/>
                                             ：<a
-                                                th:href="${commons.site_url('/blog/article/')}+${comment.cid}+'#comments-content'"
+                                                th:href="@{/blog/article/}+${comment.cid}+'#comments-content'"
                                                 target="_blank" th:utext="${commons.article(comment.content)}"></a>
                                         </li>
                                     </ul>
@@ -106,20 +106,20 @@
                         </div>
                         <!--最新留言-->
                         <!--系统日志-->
-                        <div class="col-md-4">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">系统日志</h4>
-                                </div>
-                                <div class="panel-body">
-                                    <ul class="list-group">
-                                        <li class="list-group-item" th:each="log : ${logs}">
-                                            <span th:text="${commons.fmtdate(log.created, 'yyyy-MM-dd HH:mm:ss')} +' => '+ ${log.action}"></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+<!--                        <div class="col-md-4">-->
+<!--                            <div class="panel panel-default">-->
+<!--                                <div class="panel-heading">-->
+<!--                                    <h4 class="panel-title">系统日志</h4>-->
+<!--                                </div>-->
+<!--                                <div class="panel-body">-->
+<!--                                    <ul class="list-group">-->
+<!--                                        <li class="list-group-item" th:each="log : ${logs}">-->
+<!--                                            <span th:text="${commons.fmtdate(log.created, 'yyyy-MM-dd HH:mm:ss')} +' => '+ ${log.action}"></span>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <!--系统日志-->
                     </div>
                 </div>

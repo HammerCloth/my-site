@@ -118,6 +118,7 @@
             data: param,
             success: function (result) {
                 if (result && result.code == 'success') {
+                    window.location.href = '/admin/profile';
                     tale.alertOk('保存成功');
                 } else {
                     tale.alertError(result.msg || '保存失败');

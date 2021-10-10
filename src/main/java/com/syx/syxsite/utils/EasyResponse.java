@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
  */
 @ApiModel(description = "将返回的参数封装成类")
 @Component
+@Scope(ConfigurableListableBeanFactory.SCOPE_PROTOTYPE) //每次请求该bean的时候都是一个新的bean
 @Data
 @NoArgsConstructor
 @Accessors(chain = true) //允许链式编程

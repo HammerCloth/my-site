@@ -2,6 +2,7 @@ package com.syx.syxsite.controller.admin;
 
 import com.syx.syxsite.model.User;
 import com.syx.syxsite.service.UserService;
+import com.syx.syxsite.utils.Commons;
 import com.syx.syxsite.utils.EasyResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,8 @@ public class LoginController {
     private EasyResponse easyResponse;
     @Autowired
     private UserService userService;
+    @Autowired
+    private Commons commons;
 
     @ApiOperation(value = "提供登录页面入口", notes = "登录页面跳转入口")
     @RequestMapping("/admin")

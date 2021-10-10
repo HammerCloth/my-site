@@ -57,7 +57,7 @@
 <!-- admin-footer-content -->
 <div th:fragment="admin-footer-content">
     <footer class="footer text-right">
-        © 2017 - 2018 <a th:href="@{https://github.com/WinterChenS}" target="_blank">My Site</a>
+        © 2021 - 2022 <a th:href="@{https://github.com/HammerCloth}" target="_blank">syx Site</a>
         <div class=""></div>
     </footer>
 </div>
@@ -73,7 +73,7 @@
 </div>
 <!-- admin-footer -->
 
-<!-- admin-topbar todo 相关连接还没进行改造-->
+<!-- admin-topbar-->
 <div class="topbar" th:fragment="admin-topbar">
     <div class="topbar-left">
         <div class="text-center p-t-10" style="margin: 0 auto;">
@@ -99,13 +99,13 @@
 
                 <ul class="nav navbar-nav navbar-right pull-right">
                     <li class="dropdown">
-                        <a th:href="@{index.html}" class="dropdown-toggle profile" data-toggle="dropdown"
+                        <a th:href="@{/admin/index}" class="dropdown-toggle profile" data-toggle="dropdown"
                            aria-expanded="true"><img th:src="${commons.gravatar(session.login_user.email)}"
                                                      alt="user-img"
                                                      class="img-circle"/> </a>
                         <ul class="dropdown-menu">
                             <li><a th:href="@{/}" target="_blank"><i class="fa fa-eye"
-                                                                                         aria-hidden="true"></i>
+                                                                     aria-hidden="true"></i>
                                 查看网站</a></li>
                             <li><a th:href="@{/admin/profile}"><i class="fa fa-sun-o"></i> 个人设置</a></li>
                             <li><a th:href="@{/admin/logout}"><i class="fa fa-sign-out"></i> 注销</a></li>
@@ -118,7 +118,7 @@
 </div>
 <!-- admin-topbar -->
 
-<!-- admin-side-menu todo 相关连接还没进行改造-->
+<!-- admin-side-menu-->
 <div class="left side-menu " th:fragment="admin-side-menu">
     <div class="sidebar-inner slimscrollleft">
         <div id="sidebar-menu">

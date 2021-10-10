@@ -21,7 +21,7 @@ import java.util.List;
  * @date:2021/10/3 21:02
  * @version:v1.0
  */
-@Api(description = "后台基本跳转控制")
+@Api(description = "后台基本界面跳转控制")
 @Controller
 public class IndexController {
     @Autowired

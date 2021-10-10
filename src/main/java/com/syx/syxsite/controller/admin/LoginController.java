@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,9 +16,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  * login页面的控制器
+ *
  * @author:syx
  * @date:2021/10/8 20:40
- * @version:v1.0
+ * @version:v2.0
  */
 @Api(description = "login页面的控制器")
 @Controller
@@ -44,5 +46,13 @@ public class LoginController {
             return easyResponse.setCode(EasyResponse.CODE_SUCCESS);
         }
         return easyResponse.setMsg("用户或者密码错误").setCode(EasyResponse.CODE_FAIL);
+    }
+
+
+    @ApiOperation(value = "注销登录", notes = "注销登录信息，并返回登录页面")
+    @GetMapping("/admin/logout")
+    public String loginOut(HttpSession session) {
+        session.removeAttribute("login_user");
+        return "redirect:/admin";
     }
 }

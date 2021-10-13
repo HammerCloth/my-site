@@ -4,6 +4,7 @@ import com.syx.syxsite.dao.UserDao;
 import com.syx.syxsite.model.User;
 import com.syx.syxsite.utils.Commons;
 import com.syx.syxsite.utils.EasyResponse;
+import com.syx.syxsite.utils.TaleUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
@@ -41,6 +42,7 @@ public class ProfileController {
         return "admin/profile";
     }
 
+    @ApiOperation(value = "修改个人信息", notes = "修改个人信息")
     @PostMapping("/admin/profile")
     @ResponseBody //这里不需要跳转页面，所以必须加上该注解用于传递消息,否则会不断返回login页面
     public EasyResponse saveProfile(String screenName, String email, HttpSession session,Model model) {
@@ -57,5 +59,31 @@ public class ProfileController {
             return easyResponse.setCode(EasyResponse.CODE_SUCCESS);
         }
         return easyResponse.setCode(EasyResponse.CODE_FAIL).setMsg("screenName或者email为空");
+    }
+
+    @ApiOperation(value = "修改后台密码", notes = "修改后台密码")
+    @PostMapping("/admin/password")
+    @ResponseBody
+    public EasyResponse savePassword(String oldPassword,String password,HttpSession session){
+        User loginUser = (User) session.getAttribute("login_user");
+        if (StringUtils.isBlank(oldPassword)||StringUtils.isBlank(password)){
+            return easyResponse.setCode(EasyResponse.CODE_FAIL).setMsg("信息输入不完整！");
+        }
+        if (!loginUser.getPassword().equals(TaleUtils.MD5encode(loginUser.getUsername()+oldPassword))){
+            return easyResponse.setCode(EasyResponse.CODE_FAIL).setMsg("旧密码输入不正确");
+        }
+        if (password.length()<6||password.length()>14){
+            return easyResponse.setCode(EasyResponse.CODE_FAIL).setMsg("请输入6-14位密码");
+        }
+        try {
+            loginUser.setPassword(TaleUtils.MD5encode(loginUser.getUsername()+password));
+            userDao.updateUserInfo(loginUser);
+            User user = userDao.getUserInfoById(loginUser.getUid());
+            // 更新session中的信息
+            session.setAttribute("login_user",user);
+            return easyResponse.setCode(EasyResponse.CODE_SUCCESS);
+        } catch (Exception e) {
+            return easyResponse.setCode(EasyResponse.CODE_FAIL).setMsg("密码修改失败");
+        }
     }
 }

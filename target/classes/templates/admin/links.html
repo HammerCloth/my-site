@@ -26,11 +26,11 @@
                             </thead>
                             <tbody>
                             <th:block th:each="link : ${links}">
-                                <tr th:attr="mid=${link.mid}">
-                                    <td th:text="${link.name}"></td>
-                                    <td><a th:href="@{${link.slug}}" target="_blank" th:text="${link.slug}"></a></td>
-                                    <td th:text="${link.description}"></td>
-                                    <td th:text="${link.sort}"></td>
+                                <tr th:attr="mid=${link.mid}"> <!--连接主键-->
+                                    <td th:text="${link.name}"></td> <!--连接名称-->
+                                    <td><a th:href="@{${link.slug}}" target="_blank" th:text="${link.slug}"></a></td> <!--连接地址-->
+                                    <td th:text="${link.description}"></td> <!--连接描述-->
+                                    <td th:text="${link.sort}"></td> <!--连接排序-->
                                     <td>
                                         <a href="javascript:void(0)" onclick="editLink(this);"
                                            class="btn btn-primary btn-sm waves-effect waves-light m-b-5"><i

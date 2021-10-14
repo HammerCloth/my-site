@@ -7,16 +7,103 @@
         t_metas
     </sql>
 
-    <!--    /**-->
-    <!--    * 按照类型获取项目数量-->
-    <!--    * @param type-->
-    <!--    * @return 项目数量-->
-    <!--    */-->
+    <!-- 基本列 -->
+    <sql id="BASE_COLUMN">
+        m.mid, m.name, m.slug, m.type, m.description, m.sort, m.parent
+    </sql>
+
+
     <!--    Integer getMetasCountByType(@Param("type") String type);-->
     <select id="getMetasCountByType" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT count(*)
         FROM
         <include refid="BASE_TABLE"/>
         WHERE type = #{type}
+    </select>
+
+
+    <!--    int addMeta(Meta meta);-->
+    <insert id="addMeta" parameterType="com.syx.syxsite.model.Meta">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>(name, slug, type, description, sort, parent)
+        VALUES(#{name}, #{slug}, #{type},#{description}, #{sort}, #{parent})
+    </insert>
+
+    <!--    int deleteMetaById(@Param("mid") Integer mid);-->
+    <delete id="deleteMetaById" parameterType="java.lang.Integer">
+        DELETE FROM
+        <include refid="BASE_TABLE"/>
+        WHERE mid = #{mid}
+    </delete>
+
+    <!--    int updateMeta(Meta meta);-->
+    <update id="updateMeta" parameterType="com.syx.syxsite.model.Meta">
+        UPDATE
+        <include refid="BASE_TABLE"/>
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="slug != null">
+                slug = #{slug},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="parent != null">
+                parent = #{parent},
+            </if>
+        </set>
+        WHERE mid = #{mid}
+    </update>
+
+    <!--    Meta getMetaById(@Param("mid") Integer mid);-->
+    <select id="getMetaById" resultType="com.syx.syxsite.model.Meta" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        FROM
+        <include refid="BASE_TABLE"/> AS m
+        WHERE
+        m.mid = #{mid}
+    </select>
+
+    <!--    List<Meta> getMetasByCond(MetaCond metaCond);-->
+    <select id="getMetasByCond" resultType="com.syx.syxsite.model.Meta" parameterType="com.syx.syxsite.dto.cond.MetaCond">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        FROM
+        <include refid="BASE_TABLE"/> AS m
+        <where>
+            <if test="name!=null">
+                AND m.name = #{name}
+            </if>
+            <if test="type!=null">
+                AND m.type = #{type}
+            </if>
+        </where>
+        ORDER BY m.sort
+    </select>
+
+    <sql id="RELATION_SHIP_TABLE">
+        t_relationships
+    </sql>
+
+    <!--    List<Meta> selectFromSql(Map<String, Object> paraMap);-->
+    <select id="selectFromSql" parameterType="java.util.Map" resultType="com.syx.syxsite.model.Meta">
+        SELECT
+        a.*
+        count(b.cid) as count
+        from <include refid="BASE_TABLE"/> AS a
+        left join <include refid="RELATION_SHIP_TABLE"/> AS b on a.mid = b.mid
+        where a.type = #{type}
+        group by a.mid
+        order by #{order}
+        limit #{limit}
     </select>
 </mapper>

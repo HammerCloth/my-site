@@ -1,0 +1,47 @@
+package com.syx.syxsite.dao;
+
+import com.syx.syxsite.model.Options;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author:syx
+ * @date:2021/10/14 21:44
+ * @version:v1.0
+ */
+@Mapper
+@Component
+public interface OptionsDao {
+
+    /**
+     * 删除网站配置
+     * @param name
+     * @return
+     */
+    void deleteOptionByName(String name);
+
+    /**
+     * 更新网站配置
+     * @param name
+     * @param value
+     * @return
+     */
+    void updateOptionByName(String name, String value);
+
+    /***
+     * 根据名称获取网站配置
+     * @param name
+     * @return
+     */
+    Options getOptionByName(String name);
+
+    /**
+     * 获取全部网站配置
+     * @return
+     */
+    List<Options> getOptions();
+
+}

@@ -26,22 +26,22 @@ public class AttAchServiceImpl implements AttAchService {
 
     @Override
     public void batchAddAttAch(List<AttAch> list) {
-
+        attAchDao.batchAddAttAch(list);
     }
 
     @Override
     public void deleteAttAch(Integer id) {
-
+        attAchDao.deleteAttAch(id);
     }
 
     @Override
     public void updateAttAch(AttAch attAchDomain) {
-
+        attAchDao.updateAttAch(attAchDomain);
     }
 
     @Override
     public AttAch getAttAchById(Integer id) {
-        return null;
+        return attAchDao.getAttAchById(id);
     }
 
     @Override

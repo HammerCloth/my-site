@@ -50,9 +50,7 @@ public class QiniuCloudService {
         String upToken = auth.uploadToken(BUCKET);
         try {
             Response response = null;
-
             response = uploadManager.put(file.getInputStream(), fileName, upToken, null, null);
-
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             return putRet.key;

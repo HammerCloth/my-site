@@ -61,6 +61,7 @@ public class AttachController {
         return "admin/attach";
     }
 
+    @ApiOperation(value = "上传文件到七牛云，并保存连接到数据库", notes = "上传文件到七牛云，并保存连接到数据库")
     @PostMapping("/admin/attach/upload")
     @ResponseBody
     public EasyResponse uploadFile(@RequestParam(name = "file", required = true) MultipartFile[] files,
@@ -69,16 +70,14 @@ public class AttachController {
                                    HttpSession session) {
         try {
             request.setCharacterEncoding("utf-8");
-            response.setHeader("Content-Type" , "text/html");
+            response.setHeader("Content-Type", "text/html");
 
-            for (MultipartFile file:files){
+            for (MultipartFile file : files) {
                 //获取文件存储名
                 String fileName = TaleUtils.getFileKey(file.getOriginalFilename()).replaceFirst("/", "");
                 String upload = qiniuCloudService.upload(file, fileName);
-                System.out.println("###################################################################");
-                System.out.println(upload);
                 AttAch attAch = new AttAch();
-                User login_user = (User)session.getAttribute("login_user");
+                User login_user = (User) session.getAttribute("login_user");
                 attAch.setAuthorId(login_user.getUid());
                 attAch.setFtype(TaleUtils.isImage(file.getInputStream()) ? Types.IMAGE.getType() : Types.FILE.getType());
                 attAch.setFname(fileName);
@@ -91,7 +90,22 @@ public class AttachController {
         } catch (IOException e) {
             return easyResponse.setCode(EasyResponse.CODE_FAIL).setMsg("上传失败");
         }
-
     }
 
+    @ApiOperation(value = "删除连接", notes = "删除连接")
+    @PostMapping("/admin/attach/delete")
+    @ResponseBody
+    public EasyResponse delFileInfo(@RequestParam(name = "id", required = true) Integer id){
+        try {
+            AttAch attAch = attAchService.getAttAchById(id);
+            if (null == attAch){
+                return easyResponse.setCode(EasyResponse.CODE_FAIL).setMsg("文件不存在");
+            }
+            attAchService.deleteAttAch(id);
+            return easyResponse.setCode(EasyResponse.CODE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return easyResponse.setCode(EasyResponse.CODE_FAIL).setMsg("文件删除出错");
+        }
+    }
 }

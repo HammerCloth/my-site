@@ -3,6 +3,7 @@ package com.syx.syxsite.service;
 import com.syx.syxsite.model.Options;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:syx
@@ -38,4 +39,10 @@ public interface OptionsService {
      * @return
      */
     List<Options> getOptions();
+
+    /**
+     * 保存网站配置
+     * @param options
+     */
+    void saveOptions(Map<String, String> options);
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:syx
@@ -26,7 +27,7 @@ public class OptionsServiceImpl implements OptionsService {
 
     @Override
     public void updateOptionByName(String name, String value) {
-
+        optionsDao.updateOptionByName(name,value);
     }
 
     @Override
@@ -37,5 +38,12 @@ public class OptionsServiceImpl implements OptionsService {
     @Override
     public List<Options> getOptions() {
         return optionsDao.getOptions();
+    }
+
+    @Override
+    public void saveOptions(Map<String, String> options) {
+        if (options != null && !options.isEmpty()) {
+            options.forEach(this::updateOptionByName);
+        }
     }
 }

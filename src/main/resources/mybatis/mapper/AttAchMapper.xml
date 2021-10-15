@@ -8,10 +8,11 @@
         t_attach
     </sql>
 
-    <!--    /**-->
-    <!--    * 获取附件的总数-->
-    <!--    * @return 附件总数-->
-    <!--    */-->
+    <!-- 附件的基本列 -->
+    <sql id="BASE_COLUMN">
+        aa.id, aa.fname, aa.ftype, aa.fkey, aa.authorId, aa.created,
+    </sql>
+
     <!--    Integer getAttachesCount();-->
     <select id="getAttachesCount" resultType="java.lang.Integer">
         SELECT count(*)
@@ -19,44 +20,87 @@
         <include refid="BASE_TABLE"/>
     </select>
 
-    <!--    /**-->
-    <!--    * 添加单个附件信息-->
-    <!--    * @param attAch-->
-    <!--    * @return-->
-    <!--    */-->
     <!--    int addAttAch(AttAch attAch);-->
+    <insert id="addAttAch" parameterType="com.syx.syxsite.model.AttAch">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        (fname, ftype, fkey, authorId, created)
+        VALUES(#{fname},#{ftype},#{fkey},#{authorId},UNIX_TIMESTAMP(NOW()))
+    </insert>
 
-    <!--    /**-->
-    <!--    * 批量添加附件信息-->
-    <!--    * @param list-->
-    <!--    * @return-->
-    <!--    */-->
     <!--    int batchAddAttAch(List<AttAch> list);-->
+    <insert id="batchAddAttAch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        (fname, ftype, fkey, authorId, created)
+        VALUES
+        <foreach collection="list" item="AttAch" index="index" separator=",">
+            (
+            <trim suffix="" suffixOverrides=",">
+                #{fname}, #{ftype}, #{authorId}, UNIX_TIMESTAMP(NOW()),
+            </trim>
+            )
+        </foreach>
+    </insert>
 
-    <!--    /**-->
-    <!--    * 根据主键编号删除附件信息-->
-    <!--    * @param id-->
-    <!--    * @return-->
-    <!--    */-->
     <!--    int deleteAttAch(int id);-->
+    <delete id="deleteAttAch" parameterType="java.lang.Integer">
+        DELETE FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        id = #{id}
+    </delete>
 
-    <!--    /**-->
-    <!--    * 更新附件信息-->
-    <!--    * @param attAch-->
-    <!--    * @return-->
-    <!--    */-->
-    <!--    int updateAttAch(AttAch attAch);-->
 
-    <!--    /**-->
-    <!--    * 根据主键获取附件信息-->
-    <!--    * @param id-->
-    <!--    * @return-->
-    <!--    */-->
+    <!--    int updateAttAch(AttAch attAch); todo 有问题-->
+    <update id="updateAttAch" parameterType="com.syx.syxsite.model.AttAch">
+        UPDATE
+        <include refid="BASE_TABLE"/>
+        <set>
+            <if test="fname != null">
+                fname = #{fname, jdbcType=VARCHAR},
+            </if>
+            <if test="ftype != null">
+                ftype = #{ftype, jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                authorId = #{authorId,jdbcType=INTEGER},
+                created = UNIX_TIMESTAMP(NOW()),
+            </if>
+        </set>
+    </update>
+
+    <!-- 用户表 -->
+    <sql id="TABLE_USER">
+        t_users
+    </sql>
+
+    <!-- 关联查询的用户表需要的字段 -->
+    <sql id="REL_USER_COLUMN">
+        u.username,
+    </sql>
+
     <!--    AttAch getAttAchById(@Param("id") int id);-->
+    <select id="getAttAchById" parameterType="java.lang.Integer" resultType="com.syx.syxsite.model.AttAch">
+        SELECT
+        <trim suffix="" suffixOverrides=",">
+            <include refid="BASE_COLUMN"/>
+            <include refid="REL_USER_COLUMN"/>
+        </trim>
+        FROM
+        <include refid="BASE_TABLE"/>
+        AS aa
+        LEFT JOIN
+        <include refid="TABLE_USER"/>
+        AS u
+        ON aa.authorId = u.uid
+        WHERE aa.id = #{id}
+    </select>
 
-    <!--    /**-->
-    <!--    * 获取所有的附件信息-->
-    <!--    * @return-->
-    <!--    */-->
     <!--    List<AttAch> getAtts();-->
+    <select id="getAtts" resultType="com.syx.syxsite.model.AttAch">
+        SELECT *
+        FROM
+        <include refid="BASE_TABLE"/>
+    </select>
 </mapper>

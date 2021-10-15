@@ -27,7 +27,7 @@
         <include refid="BASE_TABLE"/>
         <set>
             <if test="value != null">
-                value = #{value, jdbcType=VARCHAR},
+                value = #{value},
             </if>
         </set>
         WHERE name = #{name}

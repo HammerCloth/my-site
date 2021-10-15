@@ -31,3 +31,11 @@ pagehelper:
 logging:
   level:
     root: debug
+
+# 七牛云的配置
+qiniu:
+  accesskey: "GNaqhbxe3rhjCh2xeUHe0pBKJvn_19jX3bjQTEzW"
+  serectkey: "kKCDf1k6Yf_DPr0W-iDVuUnvUhU4Dcyu_muqssxN"
+  bucket: "syx-site2"
+  cdn:
+    url: "http://r10rf0g22.hd-bkt.clouddn.com"

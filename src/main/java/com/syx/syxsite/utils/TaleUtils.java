@@ -4,6 +4,7 @@ package com.syx.syxsite.utils;
 //import cn.luischen.controller.admin.AttAchController;
 //import cn.luischen.exception.BusinessException;
 //import cn.luischen.model.UserDomain;
+import com.syx.syxsite.controller.admin.AttachController;
 import com.syx.syxsite.model.User;
 import org.apache.commons.lang3.StringUtils;
 import org.commonmark.Extension;
@@ -29,6 +30,7 @@ import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -410,24 +412,25 @@ public class TaleUtils {
         return file.getAbsolutePath() + "/";
     }
 
-//    public static String getFileKey(String name) {
-//        String prefix = "/upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
-//        if (!new File(AttAchController.CLASSPATH + prefix).exists()) {
-//            new File(AttAchController.CLASSPATH + prefix).mkdirs();
-//        }
-//
-//        name = StringUtils.trimToNull(name);
-//        if (name == null) {
-//            return prefix + "/" + UUID.UU32() + "." + null;
-//        } else {
-//            name = name.replace('\\', '/');
-//            name = name.substring(name.lastIndexOf("/") + 1);
-//            int index = name.lastIndexOf(".");
-//            String ext = null;
-//            if (index >= 0) {
-//                ext = StringUtils.trimToNull(name.substring(index + 1));
-//            }
-//            return prefix + "/" + UUID.UU32() + "." + (ext == null ? null : (ext));
-//        }
-//    }
+    public static String getFileKey(String name) {
+
+        String prefix = "/upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
+        if (!new File(getUplodFilePath() + prefix).exists()) {
+            new File(getUplodFilePath() + prefix).mkdirs();
+        }
+
+        name = StringUtils.trimToNull(name);
+        if (name == null) {
+            return prefix + "/" + UUID.randomUUID() + "." + null;
+        } else {
+            name = name.replace('\\', '/');
+            name = name.substring(name.lastIndexOf("/") + 1);
+            int index = name.lastIndexOf(".");
+            String ext = null;
+            if (index >= 0) {
+                ext = StringUtils.trimToNull(name.substring(index + 1));
+            }
+            return prefix + "/" + UUID.randomUUID() + "." + (ext == null ? null : (ext));
+        }
+    }
 }

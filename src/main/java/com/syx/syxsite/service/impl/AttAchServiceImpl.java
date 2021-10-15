@@ -20,8 +20,8 @@ public class AttAchServiceImpl implements AttAchService {
     @Autowired
     private AttAchDao attAchDao;
     @Override
-    public void addAttAch(AttAch attAchDomain) {
-
+    public void addAttAch(AttAch attAch) {
+        attAchDao.addAttAch(attAch);
     }
 
     @Override

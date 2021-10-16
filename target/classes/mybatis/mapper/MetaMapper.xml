@@ -23,7 +23,7 @@
 
 
     <!--    int addMeta(Meta meta);-->
-    <insert id="addMeta" parameterType="com.syx.syxsite.model.Meta">
+    <insert id="addMeta" parameterType="com.syx.syxsite.model.Meta" useGeneratedKeys="true" keyProperty="mid">
         INSERT INTO
         <include refid="BASE_TABLE"/>(name, slug, type, description, sort, parent)
         VALUES(#{name}, #{slug}, #{type},#{description}, #{sort}, #{parent})

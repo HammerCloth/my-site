@@ -1,5 +1,6 @@
 package com.syx.syxsite.dao;
 
+import com.syx.syxsite.dto.ArchiveDto;
 import com.syx.syxsite.dto.cond.ContentCond;
 import com.syx.syxsite.model.Content;
 import org.apache.ibatis.annotations.Mapper;
@@ -40,10 +41,10 @@ public interface ContentDao {
 
     /**
      * 更新文章
-     * @param contentDomain
+     * @param content
      * @return
      */
-    int updateArticleById(Content contentDomain);
+    int updateArticleById(Content content);
 
     /**
      * 更新文章的评论数
@@ -74,7 +75,7 @@ public interface ContentDao {
      * @param contentCond 查询条件（只包含开始时间和结束时间）
      * @return
      */
-    List<Content> getArchive(ContentCond contentCond);
+    List<ArchiveDto> getArchive(ContentCond contentCond);
 
     /**
      * 获取最近的文章（只包含id和title）

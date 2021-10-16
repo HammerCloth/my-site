@@ -41,4 +41,20 @@ public interface MetaService {
      * 保存项目的同时，进行查重
      */
     void saveMeta(String type,String name,Integer mid);
+
+    /**
+     * 批量添加
+     * @param cid
+     * @param names
+     * @param type
+     */
+    void addMetas(Integer cid, String names, String type);
+
+    /**
+     * 添加或者更新
+     * @param cid
+     * @param name
+     * @param type
+     */
+    public void saveOrUpdate(Integer cid, String name, String type);
 }

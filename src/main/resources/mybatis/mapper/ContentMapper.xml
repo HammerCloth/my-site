@@ -58,5 +58,144 @@
         ORDER BY c.created DESC <!--按照时间顺序倒序-->
     </select>
 
+    <!--    int addArticle(Content content);-->
+    <insert id="addArticle" parameterType="com.syx.syxsite.model.Content" useGeneratedKeys="true" keyProperty="cid">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            title, titlePic, slug, created, content, authorId,
+            type, status, tags, categories, hits, commentsNum, allowComment,
+            allowPing, allowFeed,
+        </trim>
+        <trim prefix="VAlUES(" suffix=")" suffixOverrides=",">
+            #{title}, #{titlePic}, #{slug}, UNIX_TIMESTAMP(NOW()),
+            #{content}, #{authorId},
+            #{type}, #{status}, #{tags},
+            #{categories}, #{hits}, #{commentsNum},
+            #{allowComment}, #{allowPing}, #{allowFeed},
+        </trim>
+    </insert>
 
+
+    <!--    int deleteArticleById(@Param("cid") Integer cid);-->
+    <delete id="deleteArticleById" parameterType="java.lang.Integer">
+        DELETE FROM
+        <include refid="BASE_TABLE"/>
+        WHERE cid=#{cid}
+    </delete>
+
+
+    <!--    int updateArticleById(Content content);-->
+    <update id="updateArticleById" parameterType="com.syx.syxsite.model.Content">
+        UPDATE
+        <include refid="BASE_TABLE"/>
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="titlePic != null">
+                titlePic = #{titlePic},
+            </if>
+            <if test="slug != null">
+                slug = #{slug},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            modified = UNIX_TIMESTAMP(NOW()),
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="tags != null">
+                tags = #{tags},
+            </if>
+            <if test="categories != null">
+                categories = #{categories},
+            </if>
+            <if test="hits != null">
+                hits = #{hits},
+            </if>
+            <if test="commentsNum != null">
+                commentsNum = #{commentsNum},
+            </if>
+            <if test="allowComment != null">
+                allowComment = #{allowComment},
+            </if>
+            <if test="allowPing != null">
+                allowPing = #{allowPing},
+            </if>
+            <if test="allowFeed != null">
+                allowFeed = #{allowFeed},
+            </if>
+        </set>
+        WHERE cid = #{cid}
+    </update>
+
+    <!--    int updateArticleCommentCountById(@Param("cid") Integer cid, @Param("commentsNum") Integer commentsNum);-->
+    <update id="updateArticleCommentCountById">
+        UPDATE
+        <include refid="BASE_TABLE"/>
+        SET commentsNum = #{commentsNum}
+        WHERE cid = #{cid}
+    </update>
+
+    <!--    Content getArticleById(@Param("cid") Integer cid);-->
+    <select id="getArticleById" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        as c
+        WHERE cid = #{cid}
+    </select>
+
+    <!--    List<ArchiveDto> getArchive(ContentCond contentCond);-->
+    <resultMap id="archiveDtoMap" type="com.syx.syxsite.dto.ArchiveDto">
+        <id column="date" property="date"/>
+        <result column="count" property="count"/>
+    </resultMap>
+    <select id="getArchive" parameterType="com.syx.syxsite.dto.cond.ContentCond" resultMap="archiveDtoMap">
+        SELECT
+        FROM_UNIXTIME(created, '%Y年%m月') as date, count(*) as count
+        FROM
+        <include refid="BASE_TABLE"/>
+        <where>
+            type = 'post'
+            and status = 'publish'
+            <if test="startTime != null">
+                AND created &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                AND created &lt;= #{endTime}
+            </if>
+        </where>
+        group by date
+        order by date desc
+    </select>
+
+    <!--    List<Content> getRecentlyArticle();-->
+    <select id="getRecentlyArticle" resultType="com.syx.syxsite.model.Content">
+        SELECT
+        cid, title
+        FROM
+        <include refid="BASE_TABLE"/>
+        ORDER BY create DESC
+    </select>
+
+    <!--    List<Content> searchArticle(@Param("param") String param);-->
+    <select id="searchArticle" resultType="com.syx.syxsite.model.Content" parameterType="java.lang.String">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        as c
+        <where>
+            c.title LIKE CONCAT('%'.#{param},'%')
+            OR
+            c.content LIKE CONCAT('%'.#{param},'%')
+        </where>
+    </select>
 </mapper>

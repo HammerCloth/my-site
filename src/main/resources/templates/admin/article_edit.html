@@ -61,14 +61,15 @@
                                    th:value="${contents!=null and contents.allowFeed !=null}?${contents.allowFeed}: true"
                                    id="allow_feed"/>
                             <input type="hidden" name="content" id="content-editor"/>
-
+                            <!--title-->
                             <div class="form-group col-md-6" style="padding: 0 10px 0 0;">
                                 <input type="text" class="form-control" placeholder="请输入文章标题（必须）" name="title"
                                        required="required"
                                        aria-required="true"
                                        th:value="${contents!=null and contents.title!=null }?${contents.title}: ''"/>
                             </div>
-
+                            <!--title-->
+                            <!--文章类型 post博文，photo作品-->
                             <div class="form-group col-md-6" style="padding: 0 0 0 10px;">
                                 <select id="multiple-type" class="select2 form-control"
                                         data-placeholder="请选择文章类型..">
@@ -82,7 +83,7 @@
                                     </th:block>
                                 </select>
                             </div>
-
+                            <!--文章类型-->
 
                                 <div class="form-group col-md-6" style="padding: 0 10px 0 0;">
                                     <!-- 如果是作品类，那么暂时不允许使用标签 -->

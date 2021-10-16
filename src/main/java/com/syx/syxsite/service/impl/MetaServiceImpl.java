@@ -68,4 +68,31 @@ public class MetaServiceImpl implements MetaService {
             throw new RuntimeException("blank");
         }
     }
+
+    @Override
+    public void addMetas(Integer cid, String names, String type) {
+        if (StringUtils.isNotBlank(names) && StringUtils.isNotBlank(type)) {
+            String[] nameArr = StringUtils.split(names, ",");
+            for (String name : nameArr) {
+                this.saveOrUpdate(cid, name, type);
+            }
+        }
+    }
+
+    @Override
+    public void saveOrUpdate(Integer cid, String name, String type) {
+        MetaCond metaCond = new MetaCond();
+        metaCond.setName(name);
+        metaCond.setType(type);
+        List<Meta> metas = this.getMetas(metaCond);
+        if (metas==null||metas.isEmpty()){ // 确保不重复
+            Meta meta = new Meta();
+            meta.setName(name);
+            meta.setType(type);
+            addMeta(meta); // 不存在则添加
+            Integer mid = meta.getMid();
+            //todo 加入相应的关联
+        }
+    }
+
 }

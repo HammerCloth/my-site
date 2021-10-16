@@ -17,4 +17,10 @@ public interface ContentService {
      * @return
      */
     List<Content> getNewArticles(int limit);
+
+    /**
+     * 保存文章
+     * @param content
+     */
+    void addArticle(Content content);
 }

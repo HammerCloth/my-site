@@ -2,6 +2,7 @@ package com.syx.syxsite.utils;
 
 
 import com.github.pagehelper.PageInfo;
+import com.syx.syxsite.model.Meta;
 import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import java.util.Date;
 
 /**
  * 用于页面的公共函数
+ *
  * @author:syx
  * @date:2021/10/8 19:33
  * @version:v1.0
@@ -31,6 +33,7 @@ public class Commons {
         String hash = TaleUtils.MD5encode(email.trim().toLowerCase());
         return avatarUrl + hash + ".png";
     }
+
     /**
      * 格式化unix时间戳为日期
      *
@@ -57,10 +60,11 @@ public class Commons {
 
     /**
      * 英文格式的日期
+     *
      * @param unixTime
      * @return
      */
-    public static String fmtdate_en(Integer unixTime){
+    public static String fmtdate_en(Integer unixTime) {
         String fmtdate = fmtdate(unixTime, "d,MMM,yyyy");
         String[] dateArr = fmtdate.split(",");
         String rs = "<span>" + dateArr[0] + "</span> " + dateArr[1] + "  " + dateArr[2];
@@ -70,29 +74,32 @@ public class Commons {
 
     /**
      * 英文格式的日期-月，日
+     *
      * @param unixTime
      * @return
      */
-    public static String fmtdate_en_m(Integer unixTime){
-        return fmtdate(unixTime,"MMM d");
+    public static String fmtdate_en_m(Integer unixTime) {
+        return fmtdate(unixTime, "MMM d");
     }
 
     /**
      * 日期-年
+     *
      * @param unixTime
      * @return
      */
-    public static String fmtdate_en_y(Integer unixTime){
-        return fmtdate(unixTime,"yyyy");
+    public static String fmtdate_en_y(Integer unixTime) {
+        return fmtdate(unixTime, "yyyy");
     }
 
     /**
      * 将中文的yyyy年MM月 - > yyyy
+     *
      * @param date
      * @return
      */
-    public static String parsedate_zh_y_m(String date){
-        if (StringUtils.isNotBlank(date)){
+    public static String parsedate_zh_y_m(String date) {
+        if (StringUtils.isNotBlank(date)) {
             Date d = DateKit.dateFormat(date, "yyyy年MM月");
             return DateKit.dateFormat(d, "yyyy");
         }
@@ -101,11 +108,12 @@ public class Commons {
 
     /**
      * 字符串转Date
+     *
      * @param date
      * @return
      */
-    public static Date fmtdate_date(String date){
-        if (StringUtils.isNotBlank(date)){
+    public static Date fmtdate_date(String date) {
+        if (StringUtils.isNotBlank(date)) {
             return DateKit.dateFormat(date, "yyyy年MM月");
         }
         return null;
@@ -113,14 +121,15 @@ public class Commons {
 
     /**
      * 根据nuix时间戳获取Date
+     *
      * @param nuixTime
      * @return
      */
-    public static Date fmtdate_unxtime(Integer nuixTime){
-        if (null != nuixTime){
+    public static Date fmtdate_unxtime(Integer nuixTime) {
+        if (null != nuixTime) {
             return DateKit.getDateByUnixTime(nuixTime);
         }
-        return  null;
+        return null;
     }
 
     /**
@@ -172,5 +181,35 @@ public class Commons {
             return str.substring(0, len);
         }
         return str;
+    }
+
+    /**
+     * 判断category和cat的交集
+     *
+     * @param cats
+     * @return
+     */
+    public static boolean exist_cat(Meta category, String cats) {
+        String[] arr = StringUtils.split(cats, ",");
+        if (null != arr && arr.length > 0) {
+            for (String c : arr) {
+                if (c.trim().equals(category.getName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static final String[] COLORS = {"default", "primary", "success", "info", "warning", "danger", "inverse", "purple", "pink"};
+
+    /**
+     * 获得一个随机的颜色
+     *
+     * @return
+     */
+    public static String rand_color() {
+        int k = (int) Math.floor(Math.random() * COLORS.length);
+        return COLORS[k];
     }
 }

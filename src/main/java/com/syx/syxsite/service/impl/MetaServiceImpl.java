@@ -4,6 +4,8 @@ import com.syx.syxsite.dao.MetaDao;
 import com.syx.syxsite.dto.cond.MetaCond;
 import com.syx.syxsite.model.Meta;
 import com.syx.syxsite.service.MetaService;
+import net.bytebuddy.implementation.bytecode.Throw;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,5 +42,30 @@ public class MetaServiceImpl implements MetaService {
     @Override
     public void addMeta(Meta meta) {
         metaDao.addMeta(meta);
+    }
+
+    @Override
+    public void saveMeta(String type, String name, Integer mid) {
+        if(StringUtils.isNotBlank(type) && StringUtils.isNotBlank(name)){
+            MetaCond cond = new MetaCond();
+            cond.setType(type);
+            cond.setName(name);
+            List<Meta> metas = getMetas(cond);
+            if (metas==null||metas.isEmpty()){ // 确保不重复
+                Meta meta = new Meta();
+                meta.setName(name);
+                meta.setType(type);
+                Meta metaById = metaDao.getMetaById(mid);
+                if (metaById!=null){
+                    updateMeta(meta); // 存在则更新
+                }else{
+                    addMeta(meta); // 不存在则添加
+                }
+            }else{
+                throw new RuntimeException("repeat");
+            }
+        }else{
+            throw new RuntimeException("blank");
+        }
     }
 }

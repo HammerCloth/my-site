@@ -36,4 +36,9 @@ public interface MetaService {
      * @param meta
      */
     void addMeta(Meta meta);
+
+    /**
+     * 保存项目的同时，进行查重
+     */
+    void saveMeta(String type,String name,Integer mid);
 }

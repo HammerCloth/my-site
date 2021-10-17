@@ -1,6 +1,7 @@
 package com.syx.syxsite.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.syx.syxsite.constant.Types;
 import com.syx.syxsite.dao.ContentDao;
 import com.syx.syxsite.dao.MetaDao;
@@ -45,5 +46,12 @@ public class ContentServiceImpl implements ContentService{
         Integer cid = content.getCid();// 在插入数据库后，自动在插入对象中封装自增主键的值
         metaService.saveOrUpdate(cid,categories,Types.CATEGORY.getType());
         metaService.saveOrUpdate(cid,tags,Types.TAG.getType());
+    }
+
+    @Override
+    public PageInfo<Content> getArticlesByCond(ContentCond contentCond, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Content> articles = contentDao.getArticlesByCond(contentCond);
+        return new PageInfo(articles);
     }
 }

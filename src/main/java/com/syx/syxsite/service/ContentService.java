@@ -1,5 +1,7 @@
 package com.syx.syxsite.service;
 
+import com.github.pagehelper.PageInfo;
+import com.syx.syxsite.dto.cond.ContentCond;
 import com.syx.syxsite.model.Content;
 
 import java.util.List;
@@ -23,4 +25,13 @@ public interface ContentService {
      * @param content
      */
     void addArticle(Content content);
+
+    /**
+     * 通过条件来获取文章并分页
+     * @param contentCond
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public PageInfo<Content> getArticlesByCond(ContentCond contentCond,int pageNum,int pageSize);
 }

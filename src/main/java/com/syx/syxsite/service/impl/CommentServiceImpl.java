@@ -1,6 +1,7 @@
 package com.syx.syxsite.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.syx.syxsite.dao.CommentDao;
 import com.syx.syxsite.dto.cond.CommentCond;
 import com.syx.syxsite.model.Comment;
@@ -28,5 +29,12 @@ public class CommentServiceImpl implements CommentService {
         PageHelper.startPage(1, limit);
         List<Comment> comments = commentDao.getCommentsByCond(new CommentCond());
         return comments;
+    }
+
+    @Override
+    public PageInfo<Comment> getCommentsByCond(CommentCond commentCond, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Comment> commentsByCond = commentDao.getCommentsByCond(commentCond);
+        return new PageInfo<Comment>(commentsByCond);
     }
 }

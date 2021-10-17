@@ -95,10 +95,10 @@ public class AttachController {
     @ApiOperation(value = "删除连接", notes = "删除连接")
     @PostMapping("/admin/attach/delete")
     @ResponseBody
-    public EasyResponse delFileInfo(@RequestParam(name = "id", required = true) Integer id){
+    public EasyResponse delFileInfo(@RequestParam(name = "id", required = true) Integer id) {
         try {
             AttAch attAch = attAchService.getAttAchById(id);
-            if (null == attAch){
+            if (null == attAch) {
                 return easyResponse.setCode(EasyResponse.CODE_FAIL).setMsg("文件不存在");
             }
             attAchService.deleteAttAch(id);
@@ -106,6 +106,36 @@ public class AttachController {
         } catch (Exception e) {
             e.printStackTrace();
             return easyResponse.setCode(EasyResponse.CODE_FAIL).setMsg("文件删除出错");
+        }
+    }
+
+    @ApiOperation(value = "markdown文件上传", notes = "markdown文件上传")
+    @PostMapping("/admin/attach/uploadfile")
+    public void fileUploadToTencentCloud(@RequestParam(name = "editormd-image-file", required = true)
+                                                     MultipartFile file,
+                                         HttpServletRequest request,
+                                         HttpServletResponse response,
+                                         HttpSession session
+    ) {
+        try {
+            request.setCharacterEncoding("utf-8");
+            response.setHeader("Content-Type", "text/html");
+            // 获取上传使用的文件名称
+            String fileName = TaleUtils.getFileKey(file.getOriginalFilename()).replaceFirst("/", "");
+            // 上传文件
+            String upload = qiniuCloudService.upload(file, fileName);
+            // 保存文件信息到数据库
+            AttAch attAch = new AttAch();
+            User login_user = (User) session.getAttribute("login_user");
+            attAch.setAuthorId(login_user.getUid());
+            attAch.setFtype(TaleUtils.isImage(file.getInputStream()) ? Types.IMAGE.getType() : Types.FILE.getType());
+            attAch.setFname(fileName);
+            String baseUrl = qiniuCloudService.QINIU_UPLOAD_SITE.endsWith("/") ? qiniuCloudService.QINIU_UPLOAD_SITE : qiniuCloudService.QINIU_UPLOAD_SITE + "/";
+            attAch.setFkey(baseUrl + fileName);
+            attAchService.addAttAch(attAch);
+            response.getWriter().write( "{\"success\": 1, \"message\":\"上传成功\",\"url\":\"" + attAch.getFkey() + "\"}" );
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

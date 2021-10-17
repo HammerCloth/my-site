@@ -54,9 +54,43 @@ public class ArticleEditController {
     @ApiOperation(value = "文章修改", notes = "修改文章")
     @PostMapping("/admin/article/modify")
     @ResponseBody
-    public EasyResponse modify() {
-        return null;
-        // todo 修改文章内容
+    public EasyResponse modify(@RequestParam(name = "cid", required = true)
+                                       Integer cid,
+                               @RequestParam(name = "title", required = true)
+                                       String title,
+                               @RequestParam(name = "titlePic", required = false)
+                                       String titlePic,
+                               @RequestParam(name = "slug", required = false)
+                                       String slug,
+                               @RequestParam(name = "content", required = true)
+                                       String content,
+                               @RequestParam(name = "type", required = true)
+                                       String type,
+                               @RequestParam(name = "status", required = true)
+                                       String status,
+                               @RequestParam(name = "tags", required = false)
+                                       String tags,
+                               @RequestParam(name = "categories", required = false, defaultValue = "默认分类")
+                                       String categories,
+                               @RequestParam(name = "allowComment", required = true)
+                                       Boolean allowComment) {
+        try {
+            Content contentObject = new Content();
+            contentObject.setCid(cid);
+            contentObject.setTitle(title);
+            contentObject.setTitlePic(titlePic);
+            contentObject.setSlug(slug);
+            contentObject.setContent(content);
+            contentObject.setType(type);
+            contentObject.setStatus(status);
+            contentObject.setTags(type.equals(Types.ARTICLE.getType()) ? tags : null);
+            contentObject.setCategories(type.equals(Types.ARTICLE.getType()) ? categories : null);
+            contentObject.setAllowComment(allowComment ? 1 : 0);
+            contentService.updateArticleById(contentObject);
+            return easyResponse.setCode(EasyResponse.CODE_SUCCESS);
+        } catch (Exception e) {
+            return easyResponse.setCode(EasyResponse.CODE_FAIL).setMsg("保存失败");
+        }
     }
 
     @ApiOperation(value = "文章保存", notes = "保存文章")
@@ -85,13 +119,13 @@ public class ArticleEditController {
             Content contentObject = new Content();
             contentObject.setTitle(title);
             contentObject.setTitlePic(titlePic);
-            contentObject.setTitle(slug);
+            contentObject.setSlug(slug);
             contentObject.setContent(content);
             contentObject.setType(type);
             contentObject.setStatus(status);
             contentObject.setTags(type.equals(Types.ARTICLE.getType()) ? tags : null);
             contentObject.setCategories(type.equals(Types.ARTICLE.getType()) ? categories : null);
-            contentObject.setAllowComment(allowComment?1:0);
+            contentObject.setAllowComment(allowComment ? 1 : 0);
             contentService.addArticle(contentObject);
             return easyResponse.setCode(EasyResponse.CODE_SUCCESS);
         } catch (Exception e) {

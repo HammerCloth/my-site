@@ -143,7 +143,7 @@
     </update>
 
     <!--    Content getArticleById(@Param("cid") Integer cid);-->
-    <select id="getArticleById" parameterType="java.lang.Integer">
+    <select id="getArticleById" parameterType="java.lang.Integer" resultType="com.syx.syxsite.model.Content">
         SELECT
         <include refid="BASE_COLUMN"/>
         FROM

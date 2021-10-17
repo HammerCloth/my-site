@@ -22,16 +22,42 @@ public interface ContentService {
 
     /**
      * 保存文章
+     *
      * @param content
      */
     void addArticle(Content content);
 
     /**
      * 通过条件来获取文章并分页
+     *
      * @param contentCond
      * @param pageNum
      * @param pageSize
      * @return
      */
-    public PageInfo<Content> getArticlesByCond(ContentCond contentCond,int pageNum,int pageSize);
+    public PageInfo<Content> getArticlesByCond(ContentCond contentCond, int pageNum, int pageSize);
+
+    /**
+     * 根据编号删除文章
+     *
+     * @param cid
+     * @return
+     */
+    void deleteArticleById(Integer cid);
+
+    /**
+     * 更新文章
+     *
+     * @param content
+     * @return
+     */
+    void updateArticleById(Content content);
+
+    /**
+     * 根据编号获取文章
+     *
+     * @param cid
+     * @return
+     */
+    Content getArticleById(Integer cid);
 }

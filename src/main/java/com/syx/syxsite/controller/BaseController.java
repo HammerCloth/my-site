@@ -1,9 +1,18 @@
 package com.syx.syxsite.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.syx.syxsite.constant.Types;
+import com.syx.syxsite.dto.cond.ContentCond;
+import com.syx.syxsite.model.Content;
+import com.syx.syxsite.service.ContentService;
+import com.syx.syxsite.utils.Commons;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author:syx
@@ -13,10 +22,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Api(description = "用于维持前台网页基本的跳转")
 @Controller
 public class BaseController {
+    @Autowired
+    private Commons commons;
+    @Autowired
+    private ContentService contentService;
 
     @ApiOperation(value="主页面跳转",notes = "主页面跳转的连接")
     @GetMapping("/")
-    public String index(){
+    public String index(Model model, @RequestParam(value = "limit",defaultValue = "12") Integer limit){
+        model.addAttribute("commons",commons);
+        ContentCond contentCond = new ContentCond();
+        contentCond.setType(Types.PHOTO.getType());
+        PageInfo<Content> articlesByCond = contentService.getArticlesByCond(contentCond, 1, limit);
+        model.addAttribute("archives",articlesByCond);
         return "index";
     }
 

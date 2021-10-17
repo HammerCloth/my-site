@@ -19,100 +19,80 @@
     <div class="blog-details">
         <article class="post-details" id="post-details">
             <header role="bog-header" class="bog-header text-center">
-                <h3><span>20</span> July 2016</h3>
-                <h2> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Sed volutpat vitae facilisis sodales, eu nibh ultricies semper.</h2>
+                <h3>
+                    <th:block th:utext="${commons.fmtdate_en(article.created)}"></th:block>
+                </h3>
+                <h2>
+                    <th:block th:text="${article.title}"></th:block>
+                </h2>
             </header>
             <figure>
                 <img th:src="@{/site/images/blog-images/blog-details-image.jpg}" alt="" class="img-responsive"/>
             </figure>
-            <div class="enter-content">
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat eu nibh ultricies semper.
-                    Vivamus porta, felis vitae facilisis sodales, felis est iaculis orci, et ornare sem mauris ut
-                    turpis. Pellentesque vitae tortor nec tellus hendrerit aliquam. Donec condimentum leo eu ullamcorper
-                    scelerisque pellentesque urna rhoncus.</p>
-                <p>Praesent posuere sapien est, vitae bibendum risus iaculis ut. Phasellus porta libero eget turpis
-                    varius dapibus. Phasellus elementum tempor quam in consectetur. Donec a nisl vehicula metus accumsan
-                    lacinia. Cras vehicula massa dui. Quisque ac vehicula turpis. Duis sodales magna risus. Donec tellus
-                    risus, vulputate id finibus et, consectetur sit amet Praesent posuere sapien est, vitae bibendum
-                    risus iaculis ut. Phasellus porta lnisl.</p>
-                <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec rhoncus
-                    iaculis eros nec dapibus. Vestibulum lacinia libero et metus rhoncus, vel convallis mi facilisis.
-                    Donec in augue nec est molestie gravida varius id sapien. Aliquam at augue ante. Quisque ut diam in
-                    nibh malesuada tempor. Proin elementum nisl ac erat finibus, ut viverra mauris lobortis.
-                    Pellentesque et ipsum nisl. Integer tincidunt, urna fermentum sodales mattis, ipsum libero mattis
-                    lacus, vitae semper risus magna ac mi. Donec auctor ante ornare, fringilla orci vitae, porttitor
-                    urna. Donec pretium eu mauris ac bibendum. Cras aliquam faucibus ligula, et porta arcu tincidunt id.
-                    Pellentesque viverra tortor vitae pellentesque placerat. </p>
+            <div id="post-content" class="post-content" itemprop="articleBody">
+                <th:block th:utext="${commons.article(article.content)}"></th:block>
             </div>
         </article>
         <!-- Comments -->
-        <div class="comments-pan">
-            <h3>3 Comments</h3>
-            <ul class="comments-reply">
-                <li>
-                    <figure>
-                        <img th:src="@{/site/images/blog-images/image-1.jpg}" alt="" class="img-responsive"/>
-                    </figure>
-                    <section>
-                        <h4>Anna Greenfield <a href="#">Reply</a></h4>
-                        <div class="date-pan">January 26, 2016</div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat eu nibh ultricies semper.
-                        Vivamus porta, felis vitae facilisis sodales, felis est iaculis orci, et ornare sem mauris ut
-                        turpis. Pellentesque vitae tortor nec tellus hendrerit aliquam. Donec condimentum leo eu
-                        ullamcorper scelerisque pellentesque urna rhoncus.
-                    </section>
-                    <ol class="reply-pan">
-                        <li>
-                            <figure>
-                                <img th:src="@{/site/images/blog-images/image-2.jpg}" alt="" class="img-responsive"/>
-                            </figure>
-                            <section>
-                                <h4>Johnathan Doe <a href="#">Reply</a></h4>
-                                <div class="date-pan">January 26, 2016</div>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat eu nibh ultricies
-                                semper. Vivamus porta, felis vitae facilisis sodales, felis est iaculis orci, et ornare
-                                sem mauris ut turpis. Pellentesque vitae tortor nec tellus hendrerit aliquam. Donec
-                                condimentum leo eu ullamcorper scelerisque pellentesque urna rhoncus.
-                            </section>
-                        </li>
-                    </ol>
-                </li>
-                <li>
-                    <figure>
-                        <img th:src="@{/site/images/blog-images/image-3.jpg}" alt="" class="img-responsive"/>
-                    </figure>
-                    <section>
-                        <h4>Anna Greenfield <a href="#">Reply</a></h4>
-                        <div class="date-pan">January 26, 2016</div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat eu nibh ultricies semper.
-                        Vivamus porta, felis vitae facilisis sodales, felis est iaculis orci, et ornare sem mauris ut
-                        turpis. Pellentesque vitae tortor nec tellus hendrerit aliquam. Donec condimentum leo eu
-                        ullamcorper scelerisque pellentesque urna rhoncus.
-                    </section>
-                </li>
-            </ul>
-            <div class="commentys-form">
-                <h4>Leave a comment</h4>
-                <div class="row">
-                    <form action="" method="get">
-                        <div class="col-xs-12 col-sm-4 col-md-4">
-                            <input name="" type="text" placeholder="Whats your name *">
+        <div th:if="${article.allowComment}" class="comment-allow">
+            <div id="comments-content" th:if="${article}!=null">
+                <div th:id="${article.cid ?: 0}" class="comments-pan">
+                    <h3>
+                        <th:block th:text="${article.commentsNum ?: 0}"></th:block>
+                        Comments
+                    </h3>
+                    <ul th:if="${comments}" class="comments-reply">
+                        <th:block th:each="comment :${comments}">
+                            <li th:id="'li-comment-'+${comment.coid}">
+                                <figure th:id="'comment-'+${comment.coid}">
+                                    <img th:src="@{${commons.gravatar(comment.mail)}(s='80',r='G',d='')}" alt=""
+                                         class="img-responsive"/>
+                                </figure>
+                                <section>
+                                    <h4><a th:href="${comment.url}" target="blank" th:text="${comment.author}"></a></h4>
+                                    <div class="date-pan">
+                                        <th:block th:text="${commons.fmtdate(comment.created)}"></th:block>
+                                    </div>
+                                    <th:block th:utext="${commons.article(comment.content)}"></th:block>
+                                </section>
+                            </li>
+                        </th:block>
+                    </ul>
+                    <div class="commentys-form">
+                        <h4>Leave a comment</h4>
+                        <div class="row">
+                            <form id="comment-form" class="comment-form" role="form"
+                                  onsubmit="return TaleComment.subComment();">
+                                <input type="hidden" name="coid" id="coid"/>
+                                <input type="hidden" name="cid" id="cid" th:value="${article.cid}"/>
+                                <input type="hidden" name="_csrf_token" th:value="${_csrf_token}"/>
+                                <div class="col-xs-12 col-sm-4 col-md-4">
+                                    <input type="text" name="author" maxlength="12" id="author"
+                                           placeholder="姓名 (*)"
+                                    />
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-4">
+                                    <input type="email" name="mail" id="mail"
+                                           placeholder="邮箱 (*)"
+                                    />
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-4">
+                                    <input type="url" name="url" id="url"
+                                           placeholder="网址 (http://)"
+                                    />
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                <textarea name="text" id="textarea" placeholder="以上信息可以为空,评论不能为空哦!"
+                                          required="required" minlength="5"
+                                          maxlength="2000"></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <input type="submit" value="Post Comment" id="misubmit"/>
+                                </div>
+                            </form>
                         </div>
-                        <div class="col-xs-12 col-sm-4 col-md-4">
-                            <input name="" type="email" placeholder="Whats your email *">
-                        </div>
-                        <div class="col-xs-12 col-sm-4 col-md-4">
-                            <input name="" type="url" placeholder="Runing a Website">
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <textarea name="" cols="" rows="" placeholder="Whats in your mind"></textarea>
-                        </div>
-                        <div class="text-center">
-                            <input name="" type="button" value="Post Comment">
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

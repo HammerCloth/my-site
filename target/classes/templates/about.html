@@ -66,33 +66,19 @@
         <div class="clearfix"></div>
         <!-- thumbnails -->
         <div class="thumbnails-pan">
-            <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
-                <figure>
-                    <img th:src="@{/site/images/about-images/about-image-1.jpg}" class="img-responsive"/>
-                    <figcaption>
-                        <h3>John Doe</h3>
-                        <h5>The designer</h5>
-                    </figcaption>
-                </figure>
-            </section>
-            <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
-                <figure>
-                    <img th:src="@{/site/images/about-images/about-image-2.jpg}" class="img-responsive"/>
-                    <figcaption>
-                        <h3>kristy Roan</h3>
-                        <h5>The Manager</h5>
-                    </figcaption>
-                </figure>
-            </section>
-            <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
-                <figure>
-                    <img th:src="@{/site/images/about-images/about-image-3.jpg}" class="img-responsive"/>
-                    <figcaption>
-                        <h3>Jason takas</h3>
-                        <h5>The Founder</h5>
-                    </figcaption>
-                </figure>
-            </section>
+            <th:block th:each="link,linkStat : ${links}">
+                <th:block th:if="${linkStat.index < 3}">
+                    <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
+                        <figure>
+                            <img th:src="@{'/site/images/about-images/about-image-' + ${linkStat.index+1} + '.jpg'}" th:onclick="'javascript:linkFirend(\''+${link.slug}+'\')'" class="img-responsive"/>
+                            <figcaption>
+                                <h3><th:block th:text="${link.name}"></th:block></h3>
+                                <h5><th:block th:text="${link.description}"></th:block></h5>
+                            </figcaption>
+                        </figure>
+                    </section>
+                </th:block>
+            </th:block>
         </div>
         <!-- thumbnails -->
     </div>

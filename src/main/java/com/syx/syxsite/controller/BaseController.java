@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -38,6 +39,16 @@ public class BaseController {
         return "index";
     }
 
+    @ApiOperation(value="主页作品详情页面跳转",notes = "主页作品详情页面跳转的连接")
+    @GetMapping("/photo/article/{cid}")
+    public String article(@PathVariable Integer cid,Model model){
+        Content article = contentService.getArticleById(cid);
+        // todo 更新文章的点击量
+        model.addAttribute("commons",commons);
+        model.addAttribute("archive",article);
+        return "works-details";
+    }
+
     @ApiOperation(value="about页面跳转",notes = "about跳转的连接")
     @GetMapping("/about")
     public String about(){
@@ -54,12 +65,6 @@ public class BaseController {
     @GetMapping("/contact")
     public String contact(){
         return "contact";
-    }
-
-    @ApiOperation(value="主页文章详情页面跳转",notes = "主页文章详情页面跳转的连接")
-    @GetMapping("/works/details")
-    public String worksDetails(){
-        return "works-details";
     }
 
     @ApiOperation(value="博客文章详情页面跳转",notes = "博客文章详情页面跳转的连接")

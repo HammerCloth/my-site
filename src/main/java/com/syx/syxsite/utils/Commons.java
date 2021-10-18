@@ -8,6 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -237,5 +239,57 @@ public class Commons {
             }
         }
         return "";
+    }
+
+    /**
+     * 获取文章中所有的文字
+     * @param content
+     * @return
+     */
+    public static List<String> show_all_p(String content){
+        List<String> rs = new LinkedList();
+        content = TaleUtils.mdToHtml(content);
+        String reg = "<[a-zA-Z]+.*?>([\\s\\S]*?)</[a-zA-Z]*>";
+
+        Pattern p = Pattern.compile(reg, Pattern.MULTILINE);
+        content = content.replace("&nbsp;", "");
+        Matcher m = p.matcher(content);
+        while(m.find()) {
+            String data = m.group(1).trim();
+            if(!"".equals(data) && !data.contains("<img")) {
+                data = "<p>" + data + "</p>";
+                rs.add(data);
+            }
+        }
+        return rs;
+    }
+
+    /**
+     * 获取文章中的所有图片
+     * @param content
+     * @return
+     */
+    public static List<String> show_all_thumb(String content) {
+        List<String> rs = new LinkedList();
+        content = TaleUtils.mdToHtml(content);
+        if (content.contains("<img")) {
+            String img = "";
+            String regEx_img = "<[a-zA-Z]+.*?>([\\s\\S]*?)</[a-zA-Z]*>";
+            Pattern p_image = Pattern.compile(regEx_img, Pattern.MULTILINE);
+            Matcher m_image = p_image.matcher(content);
+            while (m_image.find()) {
+                String data = m_image.group(1).trim();
+                if(!"".equals(data) && data.contains("<img")) {
+                    // //匹配src
+                    Matcher m = Pattern.compile("src\\s*=\\s*\'?\"?(.*?)(\'|\"|>|\\s+)").matcher(data);
+                    while (m.find()){
+                        //  if (m.find()) {
+                        rs.add(m.group(1));
+                    }
+                }
+
+            }
+        }
+        return rs;
     }
 }

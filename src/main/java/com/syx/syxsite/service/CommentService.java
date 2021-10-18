@@ -27,4 +27,11 @@ public interface CommentService {
      * @return
      */
     PageInfo<Comment> getCommentsByCond(CommentCond commentCond, int pageNum, int pageSize);
+
+    /**
+     * 根据文章编号获取评论列表--只显示通过审核的评论-正常状态的
+     * @param cid 文章主键编号
+     * @return
+     */
+    List<Comment> getCommentsByCId(Integer cid);
 }

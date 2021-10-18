@@ -37,4 +37,9 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> commentsByCond = commentDao.getCommentsByCond(commentCond);
         return new PageInfo<Comment>(commentsByCond);
     }
+
+    @Override
+    public List<Comment> getCommentsByCId(Integer cid) {
+        return commentDao.getCommentsByCId(cid);
+    }
 }

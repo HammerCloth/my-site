@@ -3,8 +3,13 @@ package com.syx.syxsite.controller;
 import com.github.pagehelper.PageInfo;
 import com.syx.syxsite.constant.Types;
 import com.syx.syxsite.dto.cond.ContentCond;
+import com.syx.syxsite.dto.cond.MetaCond;
+import com.syx.syxsite.model.Comment;
 import com.syx.syxsite.model.Content;
+import com.syx.syxsite.model.Meta;
+import com.syx.syxsite.service.CommentService;
 import com.syx.syxsite.service.ContentService;
+import com.syx.syxsite.service.MetaService;
 import com.syx.syxsite.utils.Commons;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author:syx
@@ -30,6 +36,10 @@ public class BaseController {
     private Commons commons;
     @Autowired
     private ContentService contentService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private MetaService metaService;
 
     @ApiOperation(value = "主页面跳转", notes = "主页面跳转的连接")
     @GetMapping("/")
@@ -54,7 +64,12 @@ public class BaseController {
 
     @ApiOperation(value = "about页面跳转", notes = "about跳转的连接")
     @GetMapping("/about")
-    public String about() {
+    public String about(Model model) {
+        MetaCond metaCond = new MetaCond();
+        metaCond.setType(Types.LINK.getType());
+        List<Meta> metas = metaService.getMetas(metaCond);
+        model.addAttribute("commons", commons);
+        model.addAttribute("links", metas);
         return "about";
     }
 
@@ -72,12 +87,12 @@ public class BaseController {
                             @RequestParam(name = "limit", required = false, defaultValue = "11")
                                     int limit
     ) {
-        if (p<0){
+        if (p < 0) {
             p = 1;
         }
         ContentCond contentCond = new ContentCond();
         contentCond.setType(Types.ARTICLE.getType());
-        PageInfo<Content> articlesByCond = contentService.getArticlesByCond(contentCond,p,limit);
+        PageInfo<Content> articlesByCond = contentService.getArticlesByCond(contentCond, p, limit);
         request.setAttribute("articles", articlesByCond);//文章列表
         request.setAttribute("commons", commons);
         return "blog";
@@ -90,8 +105,15 @@ public class BaseController {
     }
 
     @ApiOperation(value = "博客文章详情页面跳转", notes = "博客文章详情页面跳转的连接")
-    @GetMapping("/blog/details")
-    public String blogDetails() {
+    @GetMapping("/blog/article/{cid}")
+    public String blogDetails(@PathVariable Integer cid, Model model) {
+        Content article = contentService.getArticleById(cid);
+        model.addAttribute("article", article);
+        model.addAttribute("commons", commons);
+        // todo 更新文章的点击量
+        // 获取对应文章的评论
+        List<Comment> commentsByCId = commentService.getCommentsByCId(cid);
+        model.addAttribute("comments", commentsByCId);
         return "blog-details";
     }
 }

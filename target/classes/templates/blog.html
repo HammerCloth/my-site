@@ -29,12 +29,12 @@
                     <th:block th:if="${articleStat.index % 2 != 0}"> <!--用于将list分为左右两个部分-->
                         <li>
                             <section class="blog-content">
-                                <a th:href="${commons.blogPermalink(article.cid)}">
+                                <a th:href="@{'/blog/article/'+${article.cid}}">
                                     <figure>
                                         <div class="post-date">
                                             <th:block th:utext="${commons.fmtdate_en(article.created)}"></th:block>
                                         </div>
-                                        <img th:src="${commons.show_thumb(article.content) ?:commons.randomBlogPic(1322)}"
+                                        <img th:src="${commons.show_thumb(article.content) ?:commons.randomBlogPic()}"
                                              alt=""
                                              class="img-responsive"/>
                                     </figure>
@@ -54,12 +54,12 @@
                     <th:block th:if="${articleStat.index % 2 == 0}">
                         <li>
                             <section class="blog-content">
-                                <a th:href="${commons.blogPermalink(article.cid)}">
+                                <a th:href="@{'/blog/article/'+${article.cid}}">
                                     <figure>
                                         <div class="post-date">
                                             <th:block th:utext="${commons.fmtdate_en(article.created)}"></th:block>
                                         </div>
-                                        <img th:src="${commons.show_thumb(article.content) ?:commons.randomBlogPic(1221)}"
+                                        <img th:src="${commons.show_thumb(article.content) ?:commons.randomBlogPic()}"
                                              alt=""
                                              class="img-responsive"/>
                                     </figure>

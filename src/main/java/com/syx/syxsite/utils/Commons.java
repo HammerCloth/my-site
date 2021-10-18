@@ -7,9 +7,7 @@ import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -292,4 +290,13 @@ public class Commons {
         }
         return rs;
     }
+
+    /**
+     * 如果blog没有配图，随机获取一张
+     * @return
+     */
+    public static String randomBlogPic(){
+        return "/site/images/blog-images/blog-" +(int)(Math.random()*(13)) +".jpg";
+    }
+
 }
